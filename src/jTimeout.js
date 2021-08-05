@@ -147,6 +147,12 @@
                     timeoutAlert.closeAlert();
                 }
             },
+            resetTimeoutWarning: function()
+            {
+                timeout.stopFlashing();
+                timeout.stopPriorCountdown();
+                timeout.hideCountdownAlert();
+            },
             setMouseTimeout: function(timeout)
             {
                 this.mouseTimeout = timeout;
@@ -226,6 +232,7 @@
                     timeout.timeoutWarning = false;
                     timeout.timedOut = false;
                     timeout.options.onSessionExtended(timeout);
+                    timeout.resetTimeoutWarning();
                     timeout.startActivityMonitoring();
                 }
                 /* If less than x seconds left and not warned yet, show warning */
@@ -239,9 +246,7 @@
                 /* reset timeout warning if timeout was set higher */
                 else if (seconds_till_expires >= timeout.options.secondsPrior && timeout.timeoutWarning)
                 {
-                    timeout.stopFlashing();
-                    timeout.stopPriorCountdown();
-                    timeout.hideCountdownAlert();
+                    timeout.resetTimeoutWarning();
                 }
             },
             /* Kill the plugin by removing all event handlers and current activities (like flashing) */
